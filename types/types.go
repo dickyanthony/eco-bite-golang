@@ -4,7 +4,7 @@ import "time"
 
 type BuyerStore interface {
 	GetBuyerByEmail(email string) (*Buyer, error)	
-	GetBuyerById(id int) (*Buyer, error)	
+	GetBuyerByID(id int) (*Buyer, error)	
 	CreateBuyer(Buyer)error
 }
 
@@ -26,9 +26,9 @@ type Buyer struct{
 }
 
 type RegisterBuyerPayload struct{
-	Name string `json:"name"`
-	Email string `json:"email"`
-	PhoneNumber string `json:"phoneNumber"` 
-	Address string `json:"address"`
-	Password string `json:"password"`
+	Name string `json:"name" validate:"required"`
+	Email string `json:"email" validate:"required,email"`
+	PhoneNumber string `json:"phoneNumber" validate:"required"` 
+	Address string `json:"address" validate:"required"`
+	Password string `json:"password" validate:"required,min=3,max=130"`
 }

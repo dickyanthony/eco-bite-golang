@@ -24,7 +24,8 @@ func (s *APIServer) Run() error{
 	router:=mux.NewRouter()
 	subrouter:=router.PathPrefix("/api/v1/").Subrouter()
 
-	buyerHandler := buyer.NewHandler()
+	buyerStore := buyer.NewStore(s.db)
+	buyerHandler := buyer.NewHandler(buyerStore)
 	buyerHandler.RegisterRoutes(subrouter)
 
 	log.Println("Listening on", s.addr)

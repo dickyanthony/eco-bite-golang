@@ -11,7 +11,7 @@ type Store struct{
 	db *sql.DB
 }
 
-func NewStore(db *sql.DB) * Store{
+func NewStore(db *sql.DB) *Store{
 	return &Store{db}
 }
 
@@ -49,4 +49,12 @@ func scanRowIntoBuyer(rows *sql.Rows) (*types.Buyer, error){
 	}
 
 	return buyer,nil
+}
+
+func (s *Store) GetBuyerByID(id int) (*types.Buyer, error) {
+	return nil,nil
+}
+
+func (s *Store) CreateBuyer(buyer types.Buyer) error{
+	return nil
 }
