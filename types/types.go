@@ -8,6 +8,22 @@ type BuyerStore interface {
 	CreateBuyer(Buyer)error
 }
 
+type ProductStore interface{
+	GetProducts() ([]Product, error)
+}
+
+type Product struct{
+	Id int `json:"id"`
+	Seller_id int `json:"seller_id"`
+	Image string `json:"image"`
+	Name string `json:"name"`
+	Description string `json:"description"`
+	Price float64 `json:"price"`
+	Quantity int `json:"quantity"`
+	Expiry_date time.Time `json:"expiry_date"`
+	Created_at time.Time `json:"created_at"`
+}
+
 type mockBuyerStore struct{
 
 }

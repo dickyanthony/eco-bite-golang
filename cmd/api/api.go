@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/dickyanth/eco-bite-v1/service/buyer"
+	"github.com/dickyanth/eco-bite-v1/service/product"
 	"github.com/gorilla/mux"
 )
 
@@ -27,6 +28,10 @@ func (s *APIServer) Run() error{
 	buyerStore := buyer.NewStore(s.db)
 	buyerHandler := buyer.NewHandler(buyerStore)
 	buyerHandler.RegisterRoutes(subrouter)
+
+	productStore := product.NewStore(s.db)
+	productHandler := product.NewHandler(productStore)
+	productHandler.RegisterRoutes(subrouter)
 
 	log.Println("Listening on", s.addr)
 	return http.ListenAndServe(s.addr,router)
