@@ -48,13 +48,13 @@ func (h *Handler) handleLogin(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
-	if !auth.ComparePassword(u.Password_hash, []byte(payload.Password)){
+	if !auth.ComparePassword(u.PasswordHash, []byte(payload.Password)){
 		utils.WriteError(w, http.StatusBadRequest, fmt.Errorf("not found, invalid email or password"))
 		return
 	}
 
 	secret := []byte(config.Envs.JWTSecret)
-	token,err := auth.CreateJWT(secret, u.Buyer_id)
+	token,err := auth.CreateJWT(secret, u.BuyerId)
 	if err != nil {
 		utils.WriteError(w, http.StatusInternalServerError, err)
 		return 
@@ -97,9 +97,9 @@ func (h *Handler) handleRegister(w http.ResponseWriter, r *http.Request){
 	err = h.store.CreateBuyer(types.Buyer{
 		Name:payload.Name,
 		Email: payload.Email,
-		Phone_number: payload.PhoneNumber,
+		PhoneNumber: payload.PhoneNumber,
 		Address: payload.Address,
-		Password_hash: hashedPassword,
+		PasswordHash: hashedPassword,
 	})
 
 	if err != nil {

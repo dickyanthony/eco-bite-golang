@@ -28,7 +28,7 @@ func (s *Store) GetBuyerByEmail(email string)(*types.Buyer, error){
 			return nil, err
 		}
 	}
-	if u.Buyer_id == 0 {
+	if u.BuyerId == 0 {
 		return nil, fmt.Errorf("buyer not found")
 	}
 	return u, nil
@@ -38,11 +38,11 @@ func scanRowIntoBuyer(rows *sql.Rows) (*types.Buyer, error){
 	buyer := new(types.Buyer)
 
 	err := rows.Scan(
-		&buyer.Buyer_id,
+		&buyer.BuyerId,
 		&buyer.Name,
 		&buyer.Email,
-		&buyer.Password_hash,
-		&buyer.Created_at,
+		&buyer.PasswordHash,
+		&buyer.CreatedAt,
 	)
 	if err != nil {
 		return nil, err
@@ -64,14 +64,14 @@ func (s *Store) GetBuyerByID(id int) (*types.Buyer, error) {
 			return nil, err
 		}
 	}
-	if u.Buyer_id == 0 {
+	if u.BuyerId == 0 {
 		return nil, fmt.Errorf("buyer not found")
 	}
 	return u, nil
 }
 
 func (s *Store) CreateBuyer(buyer types.Buyer) error{
-	_, err := s.db.Exec("INSERT INTO buyer (name, email, phone_number, address, password_hash) values (?, ?, ?, ?, ?)", buyer.Name, buyer.Email, buyer. Phone_number, buyer.Address, buyer.Password_hash)
+	_, err := s.db.Exec("INSERT INTO buyer (name, email, phone_number, address, password_hash) values (?, ?, ?, ?, ?)", buyer.Name, buyer.Email, buyer. PhoneNumber, buyer.Address, buyer.PasswordHash)
 	if err != nil {
 		return err
 	}
